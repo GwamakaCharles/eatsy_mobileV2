@@ -18,6 +18,6 @@ export type HomeParamList = {
 	Home: undefined;
 };
 
-export type TabTwoParamList = {
-	TabTwoScreen: undefined;
+export type LogOutParamList = {
+	LogOut: undefined;
 };

@@ -11,8 +11,8 @@ import * as React from "react";
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import { Home } from "../screens/Home";
-import TabTwoScreen from "../screens/TabTwoScreen";
-import { BottomTabParamList, HomeParamList, TabTwoParamList } from "../types";
+import { Logout } from "../screens/LogOut";
+import { BottomTabParamList, HomeParamList, LogOutParamList } from "../types";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -26,7 +26,7 @@ export default function BottomTabNavigator() {
 		>
 			<BottomTab.Screen
 				name="Home"
-				component={TabOneNavigator}
+				component={HomeNavigator}
 				options={{
 					tabBarIcon: ({ color }) => (
 						<TabBarIcon name="ios-code" color={color} />
@@ -35,7 +35,7 @@ export default function BottomTabNavigator() {
 			/>
 			<BottomTab.Screen
 				name="TabTwo"
-				component={TabTwoNavigator}
+				component={LogOutNavigator}
 				options={{
 					tabBarIcon: ({ color }) => (
 						<TabBarIcon name="ios-code" color={color} />
@@ -59,28 +59,28 @@ function TabBarIcon(props: {
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
 const HomeStack = createStackNavigator<HomeParamList>();
 
-function TabOneNavigator() {
+function HomeNavigator() {
 	return (
 		<HomeStack.Navigator>
 			<HomeStack.Screen
 				name="Home"
 				component={Home}
-				options={{ headerTitle: "Tab One Title" }}
+				options={{ headerTitle: "Restaurants" }}
 			/>
 		</HomeStack.Navigator>
 	);
 }
 
-const TabTwoStack = createStackNavigator<TabTwoParamList>();
+const LogOutStack = createStackNavigator<LogOutParamList>();
 
-function TabTwoNavigator() {
+function LogOutNavigator() {
 	return (
-		<TabTwoStack.Navigator>
-			<TabTwoStack.Screen
-				name="TabTwoScreen"
-				component={TabTwoScreen}
-				options={{ headerTitle: "Tab Two Title" }}
+		<LogOutStack.Navigator>
+			<LogOutStack.Screen
+				name="LogOut"
+				component={Logout}
+				options={{ headerTitle: "Log Out" }}
 			/>
-		</TabTwoStack.Navigator>
+		</LogOutStack.Navigator>
 	);
 }
