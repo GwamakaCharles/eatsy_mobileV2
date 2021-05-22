@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { gql, useQuery } from "@apollo/client";
-import { View, FlatList } from "react-native";
+import { View, FlatList, TouchableOpacity } from "react-native";
 import {
 	restaurantsPageQuery,
 	restaurantsPageQueryVariables,
@@ -32,7 +32,7 @@ const RESTAURANTS_QUERY = gql`
 	${CATEGORY_FRAGMENT}
 `;
 
-export const Home = () => {
+export const Home = ({ navigation }: { navigation: any }) => {
 	const [searchQuery, setSearchQuery] = useState("");
 	const onChangeSearch = (query: string) => setSearchQuery(query);
 
@@ -56,6 +56,18 @@ export const Home = () => {
 		}
 	}
 
+	const renderItem = ({ item }: { item: any }) => (
+		<TouchableOpacity onPress={() => navigation.navigate("Register", { item })}>
+			<Restaurant
+				key={item.id}
+				coverImg={item.coverImg}
+				id={item.id + ""}
+				name={item.name}
+				categoryName={item.category?.name}
+			/>
+		</TouchableOpacity>
+	);
+
 	return (
 		<>
 			<View style={{ padding: 10 }}>
@@ -68,16 +80,8 @@ export const Home = () => {
 			<View style={{ padding: 10 }}>
 				<FlatList
 					data={data?.restaurants.results}
-					keyExtractor={(item) => item.id + ""}
-					renderItem={({ item }) => (
-						<Restaurant
-							key={item.id}
-							coverImg={item.coverImg}
-							id={item.id + ""}
-							name={item.name}
-							categoryName={item.category?.name}
-						/>
-					)}
+					keyExtractor={(item) => `${item.id}`}
+					renderItem={renderItem}
 				/>
 			</View>
 		</>
