@@ -12,6 +12,7 @@ import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
 import { Home } from "../screens/Home";
 import { Logout } from "../screens/LogOut";
+import { Restaurant } from "../screens/Restaurant";
 import { BottomTabParamList, HomeParamList, LogOutParamList } from "../types";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -34,7 +35,7 @@ export default function BottomTabNavigator() {
 				}}
 			/>
 			<BottomTab.Screen
-				name="TabTwo"
+				name="LogOut"
 				component={LogOutNavigator}
 				options={{
 					tabBarIcon: ({ color }) => (
@@ -65,6 +66,11 @@ function HomeNavigator() {
 			<HomeStack.Screen
 				name="Home"
 				component={Home}
+				options={{ headerTitle: "Restaurants" }}
+			/>
+			<HomeStack.Screen
+				name="Restaurant"
+				component={Restaurant}
 				options={{ headerTitle: "Restaurants" }}
 			/>
 		</HomeStack.Navigator>
