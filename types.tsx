@@ -11,11 +11,12 @@ export type RootStackParamList = {
 
 export type BottomTabParamList = {
 	Home: undefined;
-	TabTwo: undefined;
+	LogOut: undefined;
 };
 
 export type HomeParamList = {
 	Home: undefined;
+	Restaurant: undefined;
 };
 
 export type LogOutParamList = {
