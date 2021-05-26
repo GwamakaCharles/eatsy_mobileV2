@@ -57,7 +57,9 @@ export const Home = ({ navigation }: { navigation: any }) => {
 	}
 
 	const renderItem = ({ item }: { item: any }) => (
-		<TouchableOpacity onPress={() => navigation.navigate("Register", { item })}>
+		<TouchableOpacity
+			onPress={() => navigation.navigate("Restaurant", { item })}
+		>
 			<Restaurant
 				key={item.id}
 				coverImg={item.coverImg}
