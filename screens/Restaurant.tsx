@@ -216,14 +216,19 @@ export const Restaurant = ({
 	);
 
 	return (
-		<View>
-			<View>
+		<View style={{ marginBottom: 150 }}>
+			<View
+				style={{
+					justifyContent: "space-between",
+				}}
+			>
 				{!orderStarted && (
 					<Button
 						mode="contained"
 						style={{
-							margin: 10,
-							padding: 5,
+							backgroundColor: "black",
+							paddingVertical: 10,
+							marginVertical: 5,
 						}}
 						onPress={triggerStartOrder}
 					>
@@ -233,18 +238,29 @@ export const Restaurant = ({
 				{orderStarted && (
 					<View
 						style={{
-							margin: 10,
 							flexDirection: "row",
+							justifyContent: "space-evenly",
+							marginVertical: 5,
 						}}
 					>
 						<Button
 							mode="contained"
 							onPress={triggerConfirmOrder}
-							style={{ marginRight: 15 }}
+							style={{
+								backgroundColor: "black",
+								paddingVertical: 10,
+							}}
 						>
 							Confirm Order
 						</Button>
-						<Button mode="contained" onPress={triggerCancelOrder}>
+						<Button
+							mode="contained"
+							onPress={triggerCancelOrder}
+							style={{
+								backgroundColor: "black",
+								paddingVertical: 10,
+							}}
+						>
 							Cancel Order
 						</Button>
 					</View>
