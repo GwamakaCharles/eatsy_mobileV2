@@ -51,7 +51,13 @@ export const Dish: React.FC<IDishProps> = ({
 			</Card.Content>
 			{orderStarted && (
 				<Card.Actions>
-					<Button onPress={onClick}>{isSelected ? "Remove" : "Add"}</Button>
+					<Button
+						mode="contained"
+						onPress={onClick}
+						style={{ backgroundColor: isSelected ? "red" : "green" }}
+					>
+						{isSelected ? "Remove" : "Add"}
+					</Button>
 				</Card.Actions>
 			)}
 		</Card>
