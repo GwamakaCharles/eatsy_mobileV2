@@ -1,8 +1,8 @@
 import { gql, useMutation, useQuery } from "@apollo/client";
 import React from "react";
 import { useState } from "react";
-import { View, Text, FlatList } from "react-native";
-import { Button } from "react-native-paper";
+import { View, Text, FlatList, Alert } from "react-native";
+import { Button, Dialog, Paragraph, Portal } from "react-native-paper";
 import { Dish } from "../components/dish";
 import { RESTAURANT_FRAGMENT, DISH_FRAGMENT } from "../hooks/fragments";
 import {
@@ -164,6 +164,29 @@ export const Restaurant = ({
 		onCompleted,
 	});
 
+	const placeOrderAlert = (message: string) =>
+		Alert.alert("Place an Order", message, [
+			{
+				text: "Cancel",
+				onPress: () => console.log("Cancel Pressed"),
+				style: "cancel",
+			},
+			{
+				text: "OK",
+				style: "default",
+				onPress: () => {
+					createOrderMutation({
+						variables: {
+							input: {
+								restaurantId: item.id,
+								items: orderItems,
+							},
+						},
+					});
+				},
+			},
+		]);
+
 	const triggerConfirmOrder = () => {
 		if (placingOrder) {
 			return;
@@ -171,18 +194,8 @@ export const Restaurant = ({
 		if (orderItems.length === 0) {
 			alert("Can't place an empty order");
 			return;
-		}
-
-		const ok = window.confirm("You are about to place an order");
-		if (ok) {
-			createOrderMutation({
-				variables: {
-					input: {
-						restaurantId: item.id,
-						items: orderItems,
-					},
-				},
-			});
+		} else {
+			placeOrderAlert("You are about to place an order");
 		}
 	};
 
