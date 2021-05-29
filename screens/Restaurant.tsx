@@ -2,6 +2,7 @@ import { gql, useMutation, useQuery } from "@apollo/client";
 import React from "react";
 import { useState } from "react";
 import { View, Text, FlatList } from "react-native";
+import { Button } from "react-native-paper";
 import { Dish } from "../components/dish";
 import { RESTAURANT_FRAGMENT, DISH_FRAGMENT } from "../hooks/fragments";
 import {
@@ -203,7 +204,40 @@ export const Restaurant = ({
 
 	return (
 		<View>
-			<View style={{ padding: 10 }}>
+			<View>
+				{!orderStarted && (
+					<Button
+						mode="contained"
+						style={{
+							margin: 10,
+							padding: 5,
+						}}
+						onPress={triggerStartOrder}
+					>
+						Start Order
+					</Button>
+				)}
+				{orderStarted && (
+					<View
+						style={{
+							margin: 10,
+							flexDirection: "row",
+						}}
+					>
+						<Button
+							mode="contained"
+							onPress={triggerConfirmOrder}
+							style={{ marginRight: 15 }}
+						>
+							Confirm Order
+						</Button>
+						<Button mode="contained" onPress={triggerCancelOrder}>
+							Cancel Order
+						</Button>
+					</View>
+				)}
+			</View>
+			<View style={{ padding: 5 }}>
 				<FlatList
 					data={data?.restaurant.restaurant?.menu}
 					keyExtractor={(item) => `${item.id}`}
