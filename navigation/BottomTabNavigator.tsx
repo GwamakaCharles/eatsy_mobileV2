@@ -71,7 +71,7 @@ function HomeNavigator() {
 			<HomeStack.Screen
 				name="Restaurant"
 				component={Restaurant}
-				options={{ headerTitle: "Restaurants" }}
+				options={{ headerTitle: "Menu" }}
 			/>
 		</HomeStack.Navigator>
 	);
