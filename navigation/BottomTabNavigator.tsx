@@ -10,9 +10,9 @@ import * as React from "react";
 
 import Colors from "../constants/Colors";
 import useColorScheme from "../hooks/useColorScheme";
-import { Home } from "../screens/Home";
+import { Home } from "../screens/client/Home";
+import { Restaurant } from "../screens/client/Restaurant";
 import { Logout } from "../screens/LogOut";
-import { Restaurant } from "../screens/Restaurant";
 import { BottomTabParamList, HomeParamList, LogOutParamList } from "../types";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();

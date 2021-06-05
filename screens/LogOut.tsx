@@ -2,20 +2,19 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as React from "react";
 import { View } from "react-native";
 import { Button } from "react-native-paper";
-import { token } from "../apollo";
+import { isLoggedInVar, tokenVar } from "../apollo";
 import { LOCALSTORAGE_TOKEN } from "../constants/token";
 
 export const Logout = () => {
-	const removeToken = () => {
-		if (token !== null) {
-			console.log("removed token", token);
-			// AsyncStorage.removeItem(LOCALSTORAGE_TOKEN);
-		}
+	const logUserOut = async () => {
+		await AsyncStorage.removeItem(LOCALSTORAGE_TOKEN);
+		isLoggedInVar(false);
+		tokenVar(null);
 	};
 
 	return (
 		<View style={{ flex: 1, alignContent: "center", alignItems: "center" }}>
-			<Button mode="contained" onPress={removeToken}>
+			<Button mode="contained" onPress={logUserOut}>
 				Logout
 			</Button>
 		</View>

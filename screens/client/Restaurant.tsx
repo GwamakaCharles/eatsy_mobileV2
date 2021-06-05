@@ -3,17 +3,17 @@ import React from "react";
 import { useState } from "react";
 import { View, Text, FlatList, Alert } from "react-native";
 import { Button, Dialog, Paragraph, Portal } from "react-native-paper";
-import { Dish } from "../components/dish";
-import { DISH_FRAGMENT, RESTAURANT_FRAGMENT } from "../hooks/fragments";
+import { Dish } from "../../components/dish";
+import { DISH_FRAGMENT, RESTAURANT_FRAGMENT } from "../../hooks/fragments";
 import {
 	createOrder,
 	createOrderVariables,
-} from "../__generated__/createOrder";
-import { CreateOrderItemInput } from "../__generated__/globalTypes";
+} from "../../__generated__/createOrder";
+import { CreateOrderItemInput } from "../../__generated__/globalTypes";
 import {
 	restaurant,
 	restaurantVariables,
-} from "../__generated__/restaurant";
+} from "../../__generated__/restaurant";
 
 const RESTAURANT_QUERY = gql`
 	query restaurant($input: RestaurantInput!) {
@@ -108,25 +108,25 @@ export const Restaurant = ({
 		}
 	};
 
-	// const removeOptionFromItem = (dishId: number, optionName: string) => {
-	// 	if (!isSelected(dishId)) {
-	// 		return;
-	// 	}
-	// 	const oldItem = getItem(dishId);
-	// 	if (oldItem) {
-	// 		removeFromOrder(dishId);
-	// 		setOrderItems((current) => [
-	// 			{
-	// 				dishId,
-	// 				options: oldItem.options?.filter(
-	// 					(option) => option.name !== optionName
-	// 				),
-	// 			},
-	// 			...current,
-	// 		]);
-	// 		return;
-	// 	}
-	// };
+	const removeOptionFromItem = (dishId: number, optionName: string) => {
+		if (!isSelected(dishId)) {
+			return;
+		}
+		const oldItem = getItem(dishId);
+		if (oldItem) {
+			removeFromOrder(dishId);
+			setOrderItems((current) => [
+				{
+					dishId,
+					options: oldItem.options?.filter(
+						(option) => option.name !== optionName
+					),
+				},
+				...current,
+			]);
+			return;
+		}
+	};
 
 	const getOptionFromItem = (
 		item: CreateOrderItemInput,
@@ -154,7 +154,6 @@ export const Restaurant = ({
 		} = data;
 		if (data.createOrder.ok) {
 			//navigate or pop the order page
-			console.log("order created");
 		}
 	};
 
@@ -175,7 +174,7 @@ export const Restaurant = ({
 			{
 				text: "OK",
 				style: "default",
-				onPress: () =>
+				onPress: () => {
 					createOrderMutation({
 						variables: {
 							input: {
@@ -183,15 +182,17 @@ export const Restaurant = ({
 								items: orderItems,
 							},
 						},
-					}),
+					});
+				},
 			},
 		]);
 
 	const triggerConfirmOrder = () => {
 		if (placingOrder) {
 			return;
-		} else if (orderItems.length === 0) {
-			Alert.alert("Can't place an empty order");
+		}
+		if (orderItems.length === 0) {
+			alert("Can't place an empty order");
 			return;
 		} else {
 			placeOrderAlert("You are about to place an order");

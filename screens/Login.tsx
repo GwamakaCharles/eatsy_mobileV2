@@ -3,9 +3,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Link } from "@react-navigation/native";
 import React, { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { View, Text } from "react-native";
+import { View, Text, Alert } from "react-native";
 import { Button, TextInput } from "react-native-paper";
-import { LOCALSTORAGE_TOKEN } from "../constants/token";
+import { logUserIn } from "../apollo";
 import {
 	loginMutation,
 	loginMutationVariables,
@@ -27,9 +27,6 @@ interface ILoginForm {
 }
 
 const Login = ({ navigation }: { navigation: any }) => {
-	const [email, setEmail] = useState("");
-	const [password, setPassword] = useState("");
-
 	const {
 		control,
 		getValues,
@@ -39,27 +36,16 @@ const Login = ({ navigation }: { navigation: any }) => {
 		mode: "onChange",
 	});
 
-	const storeToken = async (token: string) => {
-		try {
-			await AsyncStorage.setItem(LOCALSTORAGE_TOKEN, token);
-		} catch (e) {
-			// saving error
-		}
-	};
-
-	const onCompleted = (data: loginMutation) => {
+	const onCompleted = async (data: loginMutation) => {
 		const {
 			login: { ok, token },
 		} = data;
 
 		if (ok && token) {
-			storeToken(token);
-			// isLoggedInVar(true);
-			console.log("logged in");
-			console.log(token);
-			navigation.navigate("Register");
+			await logUserIn(token);
+			navigation.navigate("Home");
 		} else {
-			console.log("could not log in");
+			Alert.alert("Wrong credentials, try again!");
 		}
 	};
 
@@ -135,7 +121,6 @@ const Login = ({ navigation }: { navigation: any }) => {
 				Login
 			</Button>
 			{loginMutationResult?.login.error && <Text>Login error</Text>}
-
 			<View style={{ paddingTop: 10, alignItems: "flex-end" }}>
 				<Link to="/Register" style={{ color: "blue", fontSize: 14 }}>
 					Create an Account
